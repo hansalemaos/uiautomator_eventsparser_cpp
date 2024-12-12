@@ -736,207 +736,207 @@ int parse_uiautomator_events_lines(FILE *pipe)
                         }
                         if (key == sv_AccessibilityDataSensitive)
                         {
-                            tempstruct.AccessibilityDataSensitive = value;
+                            tempstruct.AccessibilityDataSensitive.append(value);
                         }
                         else if (key == sv_AccessibilityFocused)
                         {
-                            tempstruct.AccessibilityFocused = value;
+                            tempstruct.AccessibilityFocused.append(value);
                         }
                         else if (key == sv_AccessibilityTool)
                         {
-                            tempstruct.AccessibilityTool = value;
+                            tempstruct.AccessibilityTool.append(value);
                         }
                         else if (key == sv_Action)
                         {
-                            tempstruct.Action = value;
+                            tempstruct.Action.append(value);
                         }
                         else if (key == sv_Active)
                         {
-                            tempstruct.Active = value;
+                            tempstruct.Active.append(value);
                         }
                         else if (key == sv_AddedCount)
                         {
-                            tempstruct.AddedCount = value;
+                            tempstruct.AddedCount.append(value);
                         }
                         else if (key == sv_BeforeText)
                         {
-                            tempstruct.BeforeText = value;
+                            tempstruct.BeforeText.append(value);
                         }
                         else if (key == sv_BooleanProperties)
                         {
-                            tempstruct.BooleanProperties = value;
+                            tempstruct.BooleanProperties.append(value);
                         }
                         else if (key == sv_Checked)
                         {
-                            tempstruct.Checked = value;
+                            tempstruct.Checked.append(value);
                         }
                         else if (key == sv_ClassName)
                         {
-                            tempstruct.ClassName = value;
+                            tempstruct.ClassName.append(value);
                         }
                         else if (key == sv_ConnectionId)
                         {
-                            tempstruct.ConnectionId = value;
+                            tempstruct.ConnectionId.append(value);
                         }
                         else if (key == sv_ContentChangeTypes)
                         {
-                            tempstruct.ContentChangeTypes = value;
+                            tempstruct.ContentChangeTypes.append(value);
                         }
                         else if (key == sv_ContentDescription)
                         {
-                            tempstruct.ContentDescription = value;
+                            tempstruct.ContentDescription.append(value);
                         }
                         else if (key == sv_ContentInvalid)
                         {
-                            tempstruct.ContentInvalid = value;
+                            tempstruct.ContentInvalid.append(value);
                         }
                         else if (key == sv_CurrentItemIndex)
                         {
-                            tempstruct.CurrentItemIndex = value;
+                            tempstruct.CurrentItemIndex.append(value);
                         }
                         else if (key == sv_Empty)
                         {
-                            tempstruct.Empty = value;
+                            tempstruct.Empty.append(value);
                         }
                         else if (key == sv_Enabled)
                         {
-                            tempstruct.Enabled = value;
+                            tempstruct.Enabled.append(value);
                         }
                         else if (key == sv_EventTime)
                         {
-                            tempstruct.EventTime = value;
+                            tempstruct.EventTime.append(value);
                         }
                         else if (key == sv_EventType)
                         {
-                            tempstruct.EventType = value;
+                            tempstruct.EventType.append(value);
                         }
                         else if (key == sv_Focused)
                         {
-                            tempstruct.Focused = value;
+                            tempstruct.Focused.append(value);
                         }
                         else if (key == sv_FromIndex)
                         {
-                            tempstruct.FromIndex = value;
+                            tempstruct.FromIndex.append(value);
                         }
                         else if (key == sv_FullScreen)
                         {
-                            tempstruct.FullScreen = value;
+                            tempstruct.FullScreen.append(value);
                         }
                         else if (key == sv_ItemCount)
                         {
-                            tempstruct.ItemCount = value;
+                            tempstruct.ItemCount.append(value);
                         }
                         else if (key == sv_Loggable)
                         {
-                            tempstruct.Loggable = value;
+                            tempstruct.Loggable.append(value);
                         }
                         else if (key == sv_MaxScrollX)
                         {
-                            tempstruct.MaxScrollX = value;
+                            tempstruct.MaxScrollX.append(value);
                         }
                         else if (key == sv_MaxScrollY)
                         {
-                            tempstruct.MaxScrollY = value;
+                            tempstruct.MaxScrollY.append(value);
                         }
                         else if (key == sv_MovementGranularity)
                         {
-                            tempstruct.MovementGranularity = value;
+                            tempstruct.MovementGranularity.append(value);
                         }
                         else if (key == sv_PackageName)
                         {
-                            tempstruct.PackageName = value;
+                            tempstruct.PackageName.append(value);
                         }
                         else if (key == sv_ParcelableData)
                         {
-                            tempstruct.ParcelableData = value;
+                            tempstruct.ParcelableData.append(value);
                         }
                         else if (key == sv_Password)
                         {
-                            tempstruct.Password = value;
+                            tempstruct.Password.append(value);
                         }
                         else if (key == sv_Records)
                         {
-                            tempstruct.Records = value;
+                            tempstruct.Records.append(value);
                         }
                         else if (key == sv_RemovedCount)
                         {
-                            tempstruct.RemovedCount = value;
+                            tempstruct.RemovedCount.append(value);
                         }
                         else if (key == sv_ScrollDeltaX)
                         {
-                            tempstruct.ScrollDeltaX = value;
+                            tempstruct.ScrollDeltaX.append(value);
                         }
                         else if (key == sv_ScrollDeltaY)
                         {
-                            tempstruct.ScrollDeltaY = value;
+                            tempstruct.ScrollDeltaY.append(value);
                         }
                         else if (key == sv_ScrollX)
                         {
-                            tempstruct.ScrollX = value;
+                            tempstruct.ScrollX.append(value);
                         }
                         else if (key == sv_ScrollY)
                         {
-                            tempstruct.ScrollY = value;
+                            tempstruct.ScrollY.append(value);
                         }
                         else if (key == sv_Scrollable)
                         {
-                            tempstruct.Scrollable = value;
+                            tempstruct.Scrollable.append(value);
                         }
                         else if (key == sv_Sealed)
                         {
-                            tempstruct.Sealed = value;
+                            tempstruct.Sealed.append(value);
                         }
                         else if (key == sv_Source)
                         {
-                            tempstruct.Source = value;
+                            tempstruct.Source.append(value);
                         }
                         else if (key == sv_SourceDisplayId)
                         {
-                            tempstruct.SourceDisplayId = value;
+                            tempstruct.SourceDisplayId.append(value);
                         }
                         else if (key == sv_SourceNodeId)
                         {
-                            tempstruct.SourceNodeId = value;
+                            tempstruct.SourceNodeId.append(value);
                         }
                         else if (key == sv_SourceWindowId)
                         {
-                            tempstruct.SourceWindowId = value;
+                            tempstruct.SourceWindowId.append(value);
                         }
                         else if (key == sv_SpeechStateChangeTypes)
                         {
-                            tempstruct.SpeechStateChangeTypes = value;
+                            tempstruct.SpeechStateChangeTypes.append(value);
                         }
                         else if (key == sv_Text)
                         {
-                            tempstruct.Text = value;
+                            tempstruct.Text.append(value);
                         }
                         else if (key == sv_TimeNow)
                         {
-                            tempstruct.TimeNow = value;
+                            tempstruct.TimeNow.append(value);
                         }
                         else if (key == sv_TimeStamp)
                         {
-                            tempstruct.TimeStamp = value;
+                            tempstruct.TimeStamp.append(value);
                         }
                         else if (key == sv_ToIndex)
                         {
-                            tempstruct.ToIndex = value;
+                            tempstruct.ToIndex.append(value);
                         }
                         else if (key == sv_WindowChangeTypes)
                         {
-                            tempstruct.WindowChangeTypes = value;
+                            tempstruct.WindowChangeTypes.append(value);
                         }
                         else if (key == sv_WindowChanges)
                         {
-                            tempstruct.WindowChanges = value;
+                            tempstruct.WindowChanges.append(value);
                         }
                         else if (key == sv_WindowId)
                         {
-                            tempstruct.WindowId = value;
+                            tempstruct.WindowId.append(value);
                         }
                         else if (key == sv_recordCount)
                         {
-                            tempstruct.recordCount = value;
+                            tempstruct.recordCount.append(value);
                         }
                     }
                 }

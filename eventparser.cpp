@@ -1,37 +1,18 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <algorithm>
-#include <any>
 #include <array>
 #include <cctype>
-#include <chrono>
 #include <cmath>
 #include <compare>
 #include <cstring>
-#include <deque>
-#include <filesystem>
-#include <fstream>
-#include <functional>
-#include <initializer_list>
 #include <iostream>
-#include <list>
-#include <map>
-#include <memory>
 #include <numeric>
-#include <optional>
-#include <queue>
 #include <ranges>
-#include <set>
-#include <sstream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <string>
 #include <string_view>
-#include <typeinfo>
-#include <unordered_map>
-#include <unordered_set>
-#include <utility>
-#include <variant>
 #include <vector>
 #if __has_include(<format>)
 #include <format>
@@ -49,6 +30,8 @@
 #define EXEC_CMD(command, mode) popen(command, mode)
 #define CLOSE_CMD(pipe) pclose(pipe)
 #endif
+namespace
+{
 typedef struct string_struct
 {
     std::int64_t TimeStampInt;
@@ -278,7 +261,6 @@ static constexpr std::array<std::string_view, 160> splitat{
     "; WindowChangeTypes: ",
     "; WindowChanges: ",
     "; WindowId: ",
-    //"; TimeStamp: ",
     "; TimeNow: ",
     "; recordCount: ",
     "[ AccessibilityDataSensitive: ",
@@ -329,7 +311,6 @@ static constexpr std::array<std::string_view, 160> splitat{
     "[ WindowChangeTypes: ",
     "[ WindowChanges: ",
     "[ WindowId: ",
-    //"[ TimeStamp: ",
     "[ TimeNow: ",
     "[ recordCount: ",
     " AccessibilityDataSensitive: ",
@@ -377,7 +358,6 @@ static constexpr std::array<std::string_view, 160> splitat{
     " SpeechStateChangeTypes: ",
     " Text: ",
     " TimeNow: ",
-    //" TimeStamp: ",
     " ToIndex: ",
     " WindowChangeTypes: ",
     " WindowChanges: ",
@@ -437,19 +417,17 @@ static constexpr std::string_view sv_WindowId{"WindowId"};
 static constexpr std::string_view sv_recordCount{"recordCount"};
 static constexpr std::string_view sv_doppelpunkt{":"};
 static constexpr std::string_view delim_csv{"\",\""};
-// trim from start (in place)
-void ltrim(std::string &s)
+void lstripspaces(std::string &s)
 {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](char ch) { return !std::isspace(ch); }));
 }
 
-// trim from end (in place)
-void rtrim(std::string &s)
+void rstripspaces(std::string &s)
 {
     s.erase(std::find_if(s.rbegin(), s.rend(), [](char ch) { return !std::isspace(ch); }).base(), s.end());
 }
 
-void rtrimbrackets(std::string &s)
+void rstriptrash(std::string &s)
 {
     s.erase(std::find_if(s.rbegin(), s.rend(),
                          [](char ch) { return ((ch != ']') && (ch != ' ') && (ch != '\n') && (ch != '[')); })
@@ -459,10 +437,10 @@ void rtrimbrackets(std::string &s)
 
 void replx(std::string &haystack)
 {
-    ltrim(haystack);
-    rtrim(haystack);
+    lstripspaces(haystack);
+    rstripspaces(haystack);
     size_t oldsize = haystack.size();
-    rtrimbrackets(haystack);
+    rstriptrash(haystack);
     size_t newsize = haystack.size();
     if (oldsize != newsize)
     {
@@ -476,10 +454,10 @@ void replx(std::string &haystack)
 
             ++it;
         }
-        rtrimbrackets(haystack);
+        rstriptrash(haystack);
     }
 }
-void static replace_space_with_new_line(std::string &haystack)
+void replace_space_with_new_line(std::string &haystack)
 {
     size_t pos = 0;
     for (const auto &tag : splitat)
@@ -511,10 +489,8 @@ int64_t convert_to_unix_timestamp(std::string_view date_string, tm *current_tm, 
     current_time = time(NULL);
     current_tm = localtime(&current_time);
     tm.tm_year = current_tm->tm_year;
-
     unix_time = mktime(&tm);
     timestamp_with_milliseconds = unix_time * 1000 + milliseconds;
-    // dastri = std::to_string(timestamp_with_milliseconds);
     return timestamp_with_milliseconds;
 }
 
@@ -526,7 +502,7 @@ bool isspace_or_empty(const std::string_view &s)
 std::string dump_csv(string_struct &it)
 {
     std::string outputstring;
-    outputstring.reserve(sizeof(it) * 2);
+    outputstring.reserve((size_t)((double)sizeof(it) * 1.3));
 #if HAS_STD_FORMAT
     outputstring.append(std::format(
         "\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}"
@@ -653,9 +629,13 @@ std::string dump_csv(string_struct &it)
 #endif
     return outputstring;
 }
-constexpr size_t size_my_buffer = 128;
+
+} // namespace
 int parse_uiautomator_events_lines(FILE *pipe)
+
 {
+    constexpr size_t size_my_buffer = 128;
+
     char buffer[size_my_buffer]{};
 
     std::string cpptmpstring;
@@ -703,11 +683,7 @@ int parse_uiautomator_events_lines(FILE *pipe)
         {
             continue;
         }
-        // auto strs = s | std::views::split('\n');
-        // for (const auto &ref : strs)
-        //{
         clear_struct(tempstruct);
-        // std::string r{ref.begin(), ref.end()};
         replace_space_with_new_line(r);
         auto strss = r | std::views::split('\n');
         foundstamp = false;
@@ -742,7 +718,7 @@ int parse_uiautomator_events_lines(FILE *pipe)
                         if (r2.size() > (colpos + 1))
                         {
                             value.append(r2.substr(colpos + 1));
-                            ltrim(value);
+                            lstripspaces(value);
                         }
                         if (key == sv_AccessibilityDataSensitive)
                         {
@@ -956,11 +932,9 @@ int parse_uiautomator_events_lines(FILE *pipe)
         {
             std::cout << dump_csv(tempstruct);
         }
-        //}
         r.clear();
     }
     free(current_tm);
-    // std::cin.get();
     return 0;
 }
 int main(int argc, char *argv[])
@@ -970,9 +944,6 @@ int main(int argc, char *argv[])
     {
         cmd = "uiautomator events";
         /* zig c++ -std=c++2a -O3 -g0 eventparser.cpp && a "adb -s 127.0.0.1:5565 shell uiautomator events" */
-
-        /* g++ - 12 - fpermissive - std = c++2a - O2 - g0 fragmentdumper.cpp && ./a.out "adb -s 127.0.0.1:5565 shell
-         * dumpsys activity top -a -c --checkin" */
     }
     else
     {

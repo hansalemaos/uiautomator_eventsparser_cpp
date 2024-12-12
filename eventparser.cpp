@@ -499,6 +499,18 @@ bool isspace_or_empty(const std::string_view &s)
     return s.empty() || std::all_of(s.begin(), s.end(), ::isspace);
 }
 
+void newlinedeleter(std::string &s)
+{
+    std::string::iterator it{s.begin()};
+    while (it != s.end())
+    {
+        if (*it == '\n')
+        {
+            *it = ' ';
+        }
+        ++it;
+    }
+}
 std::string dump_csv(string_struct &it)
 {
     std::string outputstring;
@@ -509,7 +521,7 @@ std::string dump_csv(string_struct &it)
         "\",\"{}"
         "\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\","
         "\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}\",\"{}"
-        "\",\"{}\",\"{}\",\"{}\",\"{}\"\n",
+        "\",\"{}\",\"{}\",\"{}\",\"{}\"",
         it.TimeStampInt, it.AccessibilityDataSensitive, it.AccessibilityFocused, it.AccessibilityTool, it.Action,
         it.Active, it.AddedCount, it.BeforeText, it.BooleanProperties, it.Checked, it.ClassName, it.ConnectionId,
         it.ContentChangeTypes, it.ContentDescription, it.ContentInvalid, it.CurrentItemIndex, it.Empty, it.Enabled,
@@ -624,9 +636,11 @@ std::string dump_csv(string_struct &it)
     outputstring.append(delim_csv);
     outputstring.append(it.recordCount);
     outputstring += '"';
-    outputstring += '\n';
+    // outputstring += '\n';
 
 #endif
+    newlinedeleter(outputstring);
+    // outputstring += "\n";
     return outputstring;
 }
 
@@ -930,7 +944,7 @@ int parse_uiautomator_events_lines(FILE *pipe)
         }
         if (foundstamp)
         {
-            std::cout << dump_csv(tempstruct);
+            std::cout << dump_csv(tempstruct) << '\n';
         }
         r.clear();
     }
